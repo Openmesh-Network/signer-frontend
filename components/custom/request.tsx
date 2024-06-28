@@ -5,13 +5,7 @@ import { Address, formatUnits, isAddress } from "viem"
 
 import { ClaimRequest } from "@/lib/requests"
 import { Button } from "@/components/ui/button"
-import {
-  Card,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
+import { Card, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 
 export function Request({
   request,
@@ -23,7 +17,7 @@ export function Request({
   onRejected: () => void
 }) {
   const [parsedRequest, setParsedRequest] = useState<
-    { receiver: Address; amount: bigint; nonce: bigint } | undefined
+    { receiver: Address; amount: bigint; claimId: bigint } | undefined
   >(undefined)
   useEffect(() => {
     try {
@@ -31,12 +25,12 @@ export function Request({
         throw new Error("Receiver is not a valid address")
       }
       const amount = BigInt(request.amount)
-      const nonce = BigInt(request.nonce)
+      const claimId = BigInt(request.claimId)
 
       setParsedRequest({
         receiver: request.receiver,
         amount: amount,
-        nonce: nonce,
+        claimId: claimId,
       })
     } catch (err) {
       console.error(err)
@@ -52,7 +46,7 @@ export function Request({
     <Card>
       <CardHeader>
         <CardTitle>
-          #{parsedRequest.nonce.toString()}:{" "}
+          #{parsedRequest.claimId.toString()}:{" "}
           {formatUnits(parsedRequest.amount, 18)} OPEN to{" "}
           {parsedRequest.receiver}
         </CardTitle>

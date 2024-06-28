@@ -80,7 +80,7 @@ export function Requests() {
                   types: types,
                   primaryType: "Claim",
                   message: {
-                    proofId: BigInt(request.nonce),
+                    proofId: BigInt(request.claimId),
                     claimer: request.receiver as Address,
                     amount: BigInt(request.amount),
                   },
